@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Notes - Интерактивный граф заметок</title>
+    
+    <!-- Подключение стилей -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- D3.js для визуализации графа -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <!-- SimpleMDE для Markdown редактирования -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.js"></script>
+    
+    <!-- Иконки (опционально) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Контейнер для графа -->
+    <div id="graph-container"></div>
+    
+    <!-- Индикатор режима выбора для связи -->
+    <div id="connection-indicator" class="connection-indicator">
+        <i class="fas fa-link"></i> Выберите второй узел для создания связи
+    </div>
+    
+    <!-- Всплывающее окно (tooltip) -->
+    <div id="tooltip" class="hidden">
+        <div id="tooltip-content"></div>
+    </div>
+    
+    <!-- Панель редактора заметок -->
+    <div id="editor-panel">
+        <div class="editor-header">
+            <div class="editor-title">
+                <i class="fas fa-edit"></i>
+                <span id="editor-title-text">Редактирование заметки</span>
+            </div>
+            <button id="close-editor" class="close-btn" title="Закрыть (Esc)">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="editor-info">
+            <span id="node-id"></span>
+        </div>
+        
+        <!-- Контекст из родительской и дочерней ноды -->
+        <div id="context-display" class="context-display"></div>
+        
+        <div class="editor-container">
+            <textarea id="markdown-editor"></textarea>
+        </div>
+        
+        <div class="editor-footer">
+            <button id="save-note" class="btn btn-primary">
+                <i class="fas fa-save"></i> Сохранить
+            </button>
+            <button id="delete-node" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Удалить
+            </button>
+        </div>
+    </div>
+    
+    <!-- Инструкция -->
+    <div id="instructions" class="instructions">
+        <h4>Управление</h4>
+        <ul>
+            <li><span class="key">Ctrl + ЛКМ</span> по полю — создать точку</li>
+            <li><span class="key">ЛКМ</span> по полю — закрыть редактор</li>
+            <li><span class="key">ЛКМ</span> по точке — редактировать заметку</li>
+            <li><span class="key">ПКМ</span> по точке — создать связанную точку</li>
+            <li><span class="key">Ctrl + ЛКМ</span> по линии — прервать связь (breaker)</li>
+            <li><span class="key">Ctrl + ЛКМ</span> по двум точкам — создать связь между ними</li>
+            <li><span class="key">ЛКМ + Тянуть</span> — панорамирование холста</li>
+            <li><span class="key">Колёсико</span> — приблизить/отдалить</li>
+        </ul>
+        <button id="hide-instructions">Понятно</button>
+    </div>
+    
+    <!-- Основной скрипт приложения -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
